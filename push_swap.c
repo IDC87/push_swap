@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/11/24 20:59:38 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/11/25 18:11:03 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 
 //https://medium.com/nerd-for-tech/push-swap-tutorial-fa746e6aba1e
 
-void sort_small_list(int *numlist)
+int *sa_sb_ss_swap(int *stack)
 {
-	
+	int tmp;
+
+	tmp = 0;	
+	tmp = stack[0];
+	stack[0] = stack[1];
+	stack[1] = tmp;	
+
+	return (stack);
 }
 
 void error(void)
@@ -27,33 +34,45 @@ void error(void)
 
 int main	(int argc, char **argv)
 {
-	int *Numlist;
+	int *stackA;
+	int *stackB;
+	int arr_size;
 	int i;
 	int j;
 
 	i = 0;	
 	j = 1;
-	ft_printf("%d arguments\n", argc);
-	 Numlist = (int *)malloc(sizeof(int) * argc - 1);
-	while(argc > 1)
+	arr_size = argc - 1;
+	ft_printf("%d arguments", arr_size);
+	ft_printf("\n\n");
+	stackA = (int *)malloc(sizeof(int) * arr_size);
+	stackB = (int *)malloc(sizeof(int) * arr_size);
+	//stackA = NULL;
+	stackB = NULL;
+	
+	while(arr_size > 0)
 	{
-		Numlist[i] = ft_atoi(argv[j]);
-		//Numlist[i] = argv[j];
+		stackA[i] = ft_atoi(argv[j]);
 		i++;
 		j++;
-		argc--;
+		arr_size--;
 		
 	}
+	ft_printf("Original Stack\n");
+	j = 0;
+	arr_size = argc - 1;
+	while(j < arr_size)
+		ft_printf("[%d]", stackA[j++]);
+	ft_printf("\n\n");
 	
+	ft_printf("Sa - Swap the first 2 elements operation!\n");
+	sa_sb_ss_swap(stackA);
+	i = argc - 1;
 	while(i-- > 0)
-	{
-		ft_printf("%d position -> [%d]", i, *Numlist++);
-		ft_printf("\n");
-	}
+		ft_printf("[%d]", *stackA++);
+	ft_printf("\n\n");
 	
-	/* if (argc < 2)
-	error; //it shoud give the prompt back with no args
-	if(argc <= 5)
-		sort_small_list(Numlist);  */
+	//free(stackB);
+	//free(stackA);
 	return (0);
 }
