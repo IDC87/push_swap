@@ -6,13 +6,41 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/11/25 18:11:03 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/11/28 21:58:08 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 //https://medium.com/nerd-for-tech/push-swap-tutorial-fa746e6aba1e
+
+int *intdup(int const *src, size_t len)
+{
+   int *p = (int *)malloc(len * sizeof(int));
+   ft_memcpy(p, src, len * sizeof(int));
+   return p;
+}
+
+
+void pa_pb_push(t_stacks *push)
+{
+	int *tmp;
+	int i;
+	static int j;
+	
+	i = -1;
+	tmp = intdup(push->stackA, push->arr_size);
+	free(push->stackA);
+	push->stackA = (int *)malloc(sizeof(int) * (push->arr_size - 1));	
+	while (i++ < push->arr_size - 1)
+		push->stackA[i] = tmp[i + 1];
+	push->stackB[j] = tmp[0];	
+	j++;
+	push->arr_size--;
+	free(tmp);
+
+}
+
 
 int *sa_sb_ss_swap(int *stack)
 {
@@ -32,47 +60,67 @@ void error(void)
 	exit(0);
 }
 
+void print_array(t_stacks *p)
+{
+	int i;
+
+	i = 0;
+	ft_printf("\n---------------\n");
+	ft_printf("---------------\n");
+	ft_printf("%d array size", p->arr_size);
+	ft_printf("\n\n");
+	
+	while (i < p->arr_size)
+	{
+		ft_printf("%d", p->stackA[i]);
+		if (p->stackB[(p->arr_size - 1) - i] == 0)
+			ft_printf("\n");
+		else
+			ft_printf("   %d\n", p->stackB[(p->arr_size - 1) - i]);
+		i++;
+		if (i == p->arr_size)
+			ft_printf("----- -----\na     b\n");
+		// falta organizar a ordem dos inteiros
+	}	
+}
+
 int main	(int argc, char **argv)
 {
-	int *stackA;
-	int *stackB;
-	int arr_size;
+	t_stacks stack;
 	int i;
 	int j;
-
-	i = 0;	
+	
+	i = 0;
 	j = 1;
-	arr_size = argc - 1;
-	ft_printf("%d arguments", arr_size);
-	ft_printf("\n\n");
-	stackA = (int *)malloc(sizeof(int) * arr_size);
-	stackB = (int *)malloc(sizeof(int) * arr_size);
-	//stackA = NULL;
-	stackB = NULL;
-	
-	while(arr_size > 0)
+	stack.arr_size = argc - 1;
+	stack.stackA = (int *)malloc(sizeof(int) * stack.arr_size);
+	stack.stackB = (int *)malloc(sizeof(int) * stack.arr_size);
+
+	while(i < stack.arr_size)
 	{
-		stackA[i] = ft_atoi(argv[j]);
+		stack.stackA[i] = ft_atoi(argv[j]);
+		stack.stackB[i] = 0;
 		i++;
-		j++;
-		arr_size--;
-		
+		j++;		
 	}
-	ft_printf("Original Stack\n");
-	j = 0;
-	arr_size = argc - 1;
-	while(j < arr_size)
-		ft_printf("[%d]", stackA[j++]);
-	ft_printf("\n\n");
+	print_array(&stack);
+
+
+	sa_sb_ss_swap(stack.stackA);
+	print_array(&stack);
 	
-	ft_printf("Sa - Swap the first 2 elements operation!\n");
-	sa_sb_ss_swap(stackA);
-	i = argc - 1;
-	while(i-- > 0)
-		ft_printf("[%d]", *stackA++);
-	ft_printf("\n\n");
+
+	pa_pb_push(&stack);
+	print_array(&stack);
+
+	pa_pb_push(&stack);
+	print_array(&stack);
+
+	pa_pb_push(&stack);
+	print_array(&stack);
+
+	free(stack.stackA);
+	free(stack.stackB);
 	
-	//free(stackB);
-	//free(stackA);
 	return (0);
 }
