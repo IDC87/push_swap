@@ -6,11 +6,35 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/11/28 21:58:08 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/09 00:00:00 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _CRTDBG_MAP_ALLOC
 #include "push_swap.h"
+//#include <crtdbg.h>
+
+
+/* typedef struct student {
+    int age;
+} student;
+
+void addStudent(student *s) {
+     Here we can use the arrow operator (->) to dereference 
+       the pointer and access any of it's members: 
+    s->age = 10;
+}
+
+int main(void) {
+
+    student aStudent = {0};      create an instance of the student struct 
+    addStudent(&aStudent);       pass a pointer to the instance 
+
+    printf("%d", aStudent.age);
+
+    return 0;
+} */
+
 
 //https://medium.com/nerd-for-tech/push-swap-tutorial-fa746e6aba1e
 
@@ -21,67 +45,84 @@ int *intdup(int const *src, size_t len)
    return p;
 }
 
-
-void pa_pb_push(t_stacks *push)
+void push_to_b(t_stacks *push)
 {
-	int *tmp;
+	int *new_arrA;
+	int *new_arrB;
+	int tmp;
 	int i;
-	static int j;
-	
-	i = -1;
-	tmp = intdup(push->stackA, push->arr_size);
-	free(push->stackA);
-	push->stackA = (int *)malloc(sizeof(int) * (push->arr_size - 1));	
-	while (i++ < push->arr_size - 1)
-		push->stackA[i] = tmp[i + 1];
-	push->stackB[j] = tmp[0];	
-	j++;
-	push->arr_size--;
-	free(tmp);
 
+	if (push->A.arr_sizeA != 0)
+	{
+		new_arrA = (int *)malloc(sizeof(int) * (push->A.arr_sizeA - 1));
+		tmp = push->A.arrA[0];
+		i = 0;
+		while (i < (push->A.arr_sizeA - 1))
+		{
+			new_arrA[i] = push->A.arrA[i + 1];
+			i++;
+		}
+		push->A.arr_sizeA--;
+		 free(push->A.arrA);
+		push->A.arrA = NULL;
+		push->A.arrA = new_arrA;
+		
+		new_arrB = (int *)malloc(sizeof(int) * (push->B.arr_sizeB + 1));
+		i = push->B.arr_sizeB + 1;
+		while (i > 0)
+		{
+			new_arrB[i] = push->B.arrB[i - 1];
+			i--;
+		}
+		push->B.arr_sizeB++;
+		free(push->B.arrB);
+		push->B.arrB = NULL;
+		new_arrB[0] = tmp;
+		push->B.arrB = new_arrB;
+		
+	}	
+	
 }
 
 
-int *sa_sb_ss_swap(int *stack)
+
+
+void	sa_swap(t_stacks *swap)
 {
 	int tmp;
 
 	tmp = 0;	
-	tmp = stack[0];
-	stack[0] = stack[1];
-	stack[1] = tmp;	
+	if (swap->A.arr_sizeA > 1)	
+	{
+		tmp = swap->A.arrA[0];
+		swap->A.arrA[0] = swap->A.arrA[1];
+		swap->A.arrA[1] = tmp;		
+	}
+}
 
-	return (stack);
+void	sb_swap(t_stacks *swap)
+{
+	int tmp;
+
+	tmp = 0;
+	if (swap->B.arr_sizeB > 1)	
+	{
+		tmp = swap->B.arrB[swap->B.arr_sizeB - 1];
+		swap->B.arrB[swap->B.arr_sizeB - 1] = swap->B.arrB[swap->B.arr_sizeB - 2];
+		swap->B.arrB[swap->B.arr_sizeB - 2] = tmp;		
+	}
+}
+
+void	ss_swap(t_stacks *swap)
+{
+	sa_swap(swap);
+	sb_swap(swap);
 }
 
 void error(void)
 {
 	ft_printf("Error\n");
 	exit(0);
-}
-
-void print_array(t_stacks *p)
-{
-	int i;
-
-	i = 0;
-	ft_printf("\n---------------\n");
-	ft_printf("---------------\n");
-	ft_printf("%d array size", p->arr_size);
-	ft_printf("\n\n");
-	
-	while (i < p->arr_size)
-	{
-		ft_printf("%d", p->stackA[i]);
-		if (p->stackB[(p->arr_size - 1) - i] == 0)
-			ft_printf("\n");
-		else
-			ft_printf("   %d\n", p->stackB[(p->arr_size - 1) - i]);
-		i++;
-		if (i == p->arr_size)
-			ft_printf("----- -----\na     b\n");
-		// falta organizar a ordem dos inteiros
-	}	
 }
 
 int main	(int argc, char **argv)
@@ -92,35 +133,47 @@ int main	(int argc, char **argv)
 	
 	i = 0;
 	j = 1;
-	stack.arr_size = argc - 1;
-	stack.stackA = (int *)malloc(sizeof(int) * stack.arr_size);
-	stack.stackB = (int *)malloc(sizeof(int) * stack.arr_size);
+	
+	stack.A.arr_sizeA = argc - 1;
+	stack.B.arr_sizeB = 0;
+	stack.args_size = argc - 1;
+	stack.A.arrA = (int *)malloc(sizeof(int) * stack.A.arr_sizeA);
+	stack.B.arrB = ft_calloc(argc - 1, sizeof(int));
 
-	while(i < stack.arr_size)
+	while(i < stack.A.arr_sizeA)
 	{
-		stack.stackA[i] = ft_atoi(argv[j]);
-		stack.stackB[i] = 0;
+		stack.A.arrA[i] = ft_atoi(argv[j]);
 		i++;
 		j++;		
 	}
-	print_array(&stack);
-
-
-	sa_sb_ss_swap(stack.stackA);
-	print_array(&stack);
 	
-
-	pa_pb_push(&stack);
-	print_array(&stack);
-
-	pa_pb_push(&stack);
-	print_array(&stack);
-
-	pa_pb_push(&stack);
-	print_array(&stack);
-
-	free(stack.stackA);
-	free(stack.stackB);
+	ft_printf("ORIGINAL STACK\n\n");
+	print_test(&stack);
+	//print_array(&stack);
 	
+	push_to_b(&stack);
+	//sa_swap(&stack);
+	push_to_b(&stack);
+	push_to_b(&stack);
+	//ss_swap(&stack);
+	push_to_b(&stack);
+	push_to_b(&stack);
+	push_to_b(&stack);
+	
+		
+	/* sa_swap(&stack);
+	sb_swap(&stack);
+	push_a_to_b(&stack);
+	push_a_to_b(&stack);
+	push_a_to_b(&stack);
+	ss_swap(&stack);	 */
+
+	//print_array(&stack);
+	print_test(&stack);
+
+
+	free(stack.A.arrA);
+	free(stack.B.arrB);	
+	//free(&stack);
 	return (0);
 }

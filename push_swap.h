@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:56:37 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/11/28 20:11:31 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:18:30 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,34 @@
 
 #include "./libft/libft.h"
 
+typedef struct stackA
+{
+	int *arrA;
+	int arr_sizeA;	
+}	stackA;
+
+typedef struct stackB
+{
+	int *arrB;
+	int arr_sizeB;	
+}	stackB;
+
+
 typedef struct s_stacks
 {
-	int *stackA;
-	int *stackB;
-	int arr_size;
-	
+	stackA A;
+	stackB B;
+	int args_size;	
 }	t_stacks;
 
+void print_test(t_stacks *ps);
+void print_array(t_stacks *p);
+
+// first element should be at top of stack!!!!
 
 #endif
+
+
 
 /* int *stackA;
 	int *stackB;
