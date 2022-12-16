@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:28:33 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/08 21:53:59 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:00:01 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void print_test(t_stacks *ps)
 		ft_printf("[%d]", ps->A.arrA[i]);
 	ft_printf("\n\n");
 	i = -1;	
-	ft_printf("STACK B with stackA size\n");
+	ft_printf("STACK B\n");
 	while (i++ < ps->B.arr_sizeB - 1)
 		ft_printf("[%d]", ps->B.arrB[i]);
 

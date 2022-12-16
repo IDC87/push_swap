@@ -1,44 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the structs for stackA and stackB
-typedef struct stackA
-{
-    int *arrA;
-    int arr_sizeA;
-} stackA;
+// Define the structure
+typedef struct {
+  int x;
+  int y;
+} Point;
 
-typedef struct stackB
-{
-    int *arrB;
-    int arr_sizeB;
-} stackB;
+// Pop the first element of an array of structures with dynamic allocated memory
+Point pop_first(Point** arr, int* size) {
+  // Check if the array is empty
+  if (*arr == NULL) {
+    Point p = {-1, -1}; // Return a special value to indicate an error
+    return p;
+  }
 
-// Define the struct for t_stacks that contains stackA and stackB
-typedef struct s_stacks
-{
-    stackA A;
-    stackB B;
-    int args_size;
-} t_stacks;
+  // Allocate a new array that is one element smaller than the original array
+  Point* new_arr = malloc((*size - 1) * sizeof(Point));
 
-// Function that receives a stackA** argument
-void foo(stackA **var)
-{
-    // Do something with the stackA** argument
-    printf("The size of stackA is: %d\n", (*var)->arr_sizeA);
+  // Copy all the elements of the original array, except the first element, into the new array
+  for (int i = 0; i < (*size - 1); i++) {
+    new_arr[i] = (*arr)[i + 1];
+  }
+
+  // Free the memory allocated for the original array
+  free(*arr);
+
+  // Set the original array pointer to point to the new array
+  *arr = new_arr;
+
+  // Decrement the size of the array
+  (*size)--;
+
+  // Return the popped element
+  return (*arr)[0];
 }
 
-int main(int argc, char *argv[])
-{
-    // Create a t_stacks object
-    t_stacks stacks;
+int main() {
+  // Allocate an array of 5 structures
+  Point* arr = malloc(5 * sizeof(Point));
+  int size = 5;
 
-    // Set the size of stackA in the t_stacks object
-    stacks.A.arr_sizeA = 10;
+  // Populate the array with some values
+  for (int i = 0; i < size; i++) {
+    arr[i].x = i + 1;
+    arr[i].y = i + 1;
+  }
 
-    // Call the foo function and pass the address of the stackA object in the t_stacks object
-    foo(&(stacks.A));
+  // Print the original array
+  printf("Original array:\n");
+  for (int i = 0; i < size; i++) {
+    printf("(%d, %d) ", arr[i].x, arr[i].y);
+  }
+  printf("\n");
 
+  // Pop the first element of the array
+  Point popped = pop_first(&arr, &size);
+  if (popped.x == -1 && popped.y == -1) {
+    // Array is empty
+    printf("Array is empty\n");
     return 0;
+  }
+
+  // Print the modified array
+  printf("Modified array:\n");
+  for (int i = 0; i < size; i++) {
+    printf("(%d, %d) ", arr[i].x, arr[i].y);
+  }
+  printf("\n");
+
+  // Print the popped element
+  printf("Popped element: (%d, %d)\n", popped.x, popped.y);
+
+  // Free the memory allocated for the array
+  free(arr);
+
+  return 0;
 }
