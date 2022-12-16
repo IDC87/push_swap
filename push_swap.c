@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/09 00:00:00 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/12 21:32:35 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int *intdup(int const *src, size_t len)
    return p;
 }
 
-void push_to_b(t_stacks *push)
+/* void push_to_b(t_stacks *push)
 {
 	int *new_arrA;
 	int *new_arrB;
@@ -81,6 +81,41 @@ void push_to_b(t_stacks *push)
 		push->B.arrB = new_arrB;
 		
 	}	
+	
+} */
+
+void push_to_b(stackA **A, stackB **B)
+{
+	int *new_arrA;
+	int *new_arrB;
+	int tmp;
+	int i;
+
+	(*A)->arr_sizeA--;
+	new_arrA = (int *)malloc(sizeof(int) * ((*A)->arr_sizeA));
+	tmp = (*A)->arrA[0];
+		i = 0;
+		while (i < ((*A)->arr_sizeA - 1))
+		{
+			new_arrA[i] = (*A)->arrA[i + 1];
+			i++;
+		}
+		 free((*A)->arrA);
+		(*A)->arrA = NULL;
+		(*A)->arrA = new_arrA;
+		
+		new_arrB = (int *)malloc(sizeof(int) * ((*B)->arr_sizeB + 1));
+		i = (*B)->arr_sizeB + 1;
+		while (i > 0)
+		{
+			new_arrB[i] = (*B)->arrB[i - 1];
+			i--;
+		}
+		(*B)->arr_sizeB++;
+		free((*B)->arrB);
+		(*B)->arrB = NULL;
+		new_arrB[0] = tmp;
+		(*B)->arrB = new_arrB;	
 	
 }
 
@@ -151,14 +186,14 @@ int main	(int argc, char **argv)
 	print_test(&stack);
 	//print_array(&stack);
 	
-	push_to_b(&stack);
-	//sa_swap(&stack);
-	push_to_b(&stack);
-	push_to_b(&stack);
-	//ss_swap(&stack);
-	push_to_b(&stack);
-	push_to_b(&stack);
-	push_to_b(&stack);
+	push_to_b(&(stack.A), &(stack.B));
+
+	/* push_to_b(&stack.A, &stack.B);
+	push_to_b(&stack.A, &stack.B);
+	
+	push_to_b(&stack.A, &stack.B);
+	push_to_b(&stack.A, &stack.B);
+	push_to_b(&stack.A, &stack.B); */
 	
 		
 	/* sa_swap(&stack);
@@ -172,8 +207,8 @@ int main	(int argc, char **argv)
 	print_test(&stack);
 
 
-	free(stack.A.arrA);
-	free(stack.B.arrB);	
+	//free(stack.A.arrA);
+	//free(stack.B.arrB);	
 	//free(&stack);
 	return (0);
 }
