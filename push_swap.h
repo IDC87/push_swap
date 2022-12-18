@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:56:37 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/18 17:25:20 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/18 18:14:56 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ void print_array(t_stacks *p);
 void	sa(t_stacks *swap);
 void	sb(t_stacks *swap);
 void	ss(t_stacks *swap);
-
 void pa(t_stacks *stack);
 void pb(t_stacks *stack);
-
+void rotate_up(int **arr, int *arr_size);
+void rotate_down(int **arr, int *arr_size);
 void ra(stackA *A);
 void rb(stackB *B);
 void rr(stackA *A, stackB *B);
+void rra(stackA *A);
+void rrb(stackB *B);
+void rrr(stackA *A, stackB *B);
 
 
 #endif
