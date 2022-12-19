@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:56:37 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/18 18:14:56 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:02:20 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef struct s_stacks
 
 void print_test(t_stacks *ps);
 void print_array(t_stacks *p);
+
+int is_sorted(const int *arr, int arr_size);
+int is_duplicated(const int *arr, int arr_size);
+void error(void);
 
 void	sa(t_stacks *swap);
 void	sb(t_stacks *swap);

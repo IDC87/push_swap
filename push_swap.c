@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/18 20:43:07 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:14:19 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,6 @@
 //https://medium.com/nerd-for-tech/push-swap-tutorial-fa746e6aba1e
 
 
-void error(void)
-{
-	ft_printf("Error\n");
-	exit(0);
-}
-
-int is_sorted(stackA *stackA, int *arr, int arr_size)
-{
-	int i;
-	int j;
-	int tmp;
-	
-	i = 0;
-	j = 0;
-		while (i < arr_size - 1)
-		{
-			j = 0;
-			while(j < arr_size - 1 - i)
-			{
-				if (arr[j] > arr[j + 1])
-				{
-					tmp = arr[j];
-        			arr[j] = arr[j + 1];
-        			arr[j + 1] = tmp;			
-				}				
-				j++;				
-			}
-			i++;			
-		}
-		if (!ft_memcmp(arr, stackA->arrA, arr_size))
-			return (1);
-}
-
 int main	(int argc, char **argv)
 {
 	t_stacks stack;
@@ -56,7 +23,7 @@ int main	(int argc, char **argv)
 	int j;
 	
 	i = 0;
-	j = 1;
+	j = 0;
 	
 	stack.A.arr_sizeA = argc - 1;
 	stack.B.arr_sizeB = 0;
@@ -66,30 +33,23 @@ int main	(int argc, char **argv)
 
 	while(i < stack.A.arr_sizeA)
 	{
-		stack.A.arrA[i] = ft_atoi(argv[j]);
-		i++;
-		j++;		
+		if (!ft_isdigit(argv[i + 1][0]))
+			error();
+		if (argv[i + 1][0] > __INT_MAX__) // isto nao esta bem, corrigir mais tarde
+			error();
+		stack.A.arrA[i++] = ft_atoi(argv[++j]);			
 	}
+	
+	i = is_sorted(stack.A.arrA, stack.A.arr_sizeA);
+	j = is_duplicated(stack.A.arrA, stack.A.arr_sizeA);
+	if (i == 1 || j == 1)
+		error();
+	
 	
 	ft_printf("ORIGINAL STACK\n\n");
 	print_test(&stack);
 
-	//int *sorted_array = is_sorted(stack.A.arrA, stack.A.arr_sizeA);
-	
-	int *new_arr;
-
-	new_arr = (int *)malloc(sizeof(int) * stack.A.arr_sizeA);
-	ft_memcpy(new_arr, stack.A.arrA, stack.A.arr_sizeA);
-	new_arr = stack.A.arrA;
-
-	is_sorted(&stack.A, new_arr, stack.A.arr_sizeA);
-
-	i = -1;
-	while (i++ < stack.A.arr_sizeA - 1)
-		ft_printf("sorted array [%d]\n", new_arr[i]);
-
-
-	
+		
 	/* pb(&stack);
 	pa(&stack);	
 	
