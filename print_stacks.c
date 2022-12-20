@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:28:33 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/16 17:00:01 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:22:43 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,14 @@
 void print_test(t_stacks *ps)
 {
 	int i = -1;
+	static int display_counter;
 
+	ft_printf("\n-------------------------\n");
+
+	
+	ft_printf("SIZE A: [%d]", ps->A.arr_sizeA);
+	ft_printf("  || SIZE B: [%d]", ps->B.arr_sizeB);
+	ft_printf("  ||  STACK N[%d]\n", ++display_counter);
 	
 	ft_printf("\nSTACK A\n");
 	while (i++ < ps->A.arr_sizeA - 1)
@@ -86,13 +93,16 @@ void print_test(t_stacks *ps)
 	ft_printf("\n\n");
 	i = -1;	
 	ft_printf("STACK B\n");
-	while (i++ < ps->B.arr_sizeB - 1)
-		ft_printf("[%d]", ps->B.arrB[i]);
-
-	ft_printf("\n\nSIZE of original array: %d\n", ps->args_size);
-	ft_printf("SIZE of array A: %d\n", ps->A.arr_sizeA);
-	ft_printf("SIZE of array B: %d\n", ps->B.arr_sizeB);
-	ft_printf("\n\n");
+	if (ps->B.arr_sizeB != 0)
+	{
+		while (i++ < ps->B.arr_sizeB - 1)
+			ft_printf("[%d]", ps->B.arrB[i]);		
+	}
+	else
+		ft_printf("[///EMPTY\\\\]");
+	ft_printf("\n-------------------------\n");
+	ft_printf("\n");
+	
 		
 	
 }

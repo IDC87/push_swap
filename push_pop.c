@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:58:14 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/18 17:13:05 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:36:22 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void pa(t_stacks *stack)
 	if (stack->B.arr_sizeB != 0)
 	{
 		popped = pop_item(&(stack->B.arrB), &(stack->B.arr_sizeB));
-		push_item(&(stack->A.arrA), &(stack->A.arr_sizeA), popped);		
+		push_item(&(stack->A.arrA), &(stack->A.arr_sizeA), popped);
+		ft_printf("pa\n");	
 	}
 }
 
@@ -75,7 +76,8 @@ void pb(t_stacks *stack)
 	if (stack->A.arr_sizeA != 0)
 	{
 		popped = pop_item(&(stack->A.arrA), &(stack->A.arr_sizeA));
-		push_item(&(stack->B.arrB), &(stack->B.arr_sizeB), popped);		
+		push_item(&(stack->B.arrB), &(stack->B.arr_sizeB), popped);
+		ft_printf("pb\n");	
 	}
 
 }

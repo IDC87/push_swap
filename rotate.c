@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_and_reverse.c                               :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:15:27 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/18 17:32:34 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/20 23:41:51 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,27 @@ void rotate_down(int **arr, int *arr_size)
 
 void ra(stackA *A)
 {
-	rotate_up(&(A->arrA), &(A->arr_sizeA));
+	if (A->arr_sizeA > 1)
+	{
+		rotate_up(&(A->arrA), &(A->arr_sizeA));
+		ft_printf("ra\n");		
+	}
 }
 
 void rb(stackB *B)
 {
-	rotate_up(&(B->arrB), &(B->arr_sizeB));
+	if (B->arr_sizeB > 1)
+	{
+		rotate_up(&(B->arrB), &(B->arr_sizeB));
+		ft_printf("rb\n");		
+	}
 }
 
 void rr(stackA *A, stackB *B)
 {
-	rotate_up(&(A->arrA), &(A->arr_sizeA));
-	rotate_up(&(B->arrB), &(B->arr_sizeB));
+	if (A->arr_sizeA > 1)
+		rotate_up(&(A->arrA), &(A->arr_sizeA));
+	if (B->arr_sizeB > 1)
+		rotate_up(&(B->arrB), &(B->arr_sizeB));
+	ft_printf("rr\n");
 }
