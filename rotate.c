@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 17:15:27 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/20 23:41:51 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/21 01:56:36 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void rotate_down(int **arr, int *arr_size)
 }
 
 void ra(stackA *A)
-{
+{	
 	if (A->arr_sizeA > 1)
 	{
 		rotate_up(&(A->arrA), &(A->arr_sizeA));

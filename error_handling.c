@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:36:01 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/20 18:46:25 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/21 13:10:45 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@ void error(void)
 {
 	ft_printf("Error\n");
 	exit(0);
+}
+
+int	ft_isdigit_negative(int c)
+{
+	if ((c >= 48 && c <= 57) || c == 45)
+		return (1);	
+	else 
+		return (0);
 }
 
 int is_sorted(const int *arr, int arr_size, int arr_sizeB)

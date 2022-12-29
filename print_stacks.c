@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:28:33 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/20 17:22:43 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:22:26 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ void print_test(t_stacks *ps)
 	}
 	else
 		ft_printf("[///EMPTY\\\\]");
+		
+	i = -1;
+	ft_printf("\n\nGROUP STACK\n");
+	while (i++ < ps->A.arr_sizeA - 1)
+			ft_printf("[%d]", ps->group_arr[i]);
 	ft_printf("\n-------------------------\n");
 	ft_printf("\n");
 	
