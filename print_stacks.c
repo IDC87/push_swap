@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:28:33 by ivda-cru          #+#    #+#             */
-/*   Updated: 2022/12/21 17:22:26 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:00:33 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void print_test(t_stacks *ps)
 	
 	ft_printf("SIZE A: [%d]", ps->A.arr_sizeA);
 	ft_printf("  || SIZE B: [%d]", ps->B.arr_sizeB);
-	ft_printf("  ||  STACK N[%d]\n", ++display_counter);
+	ft_printf("  ||  STACK N[%d]", ++display_counter);
+	ft_printf("  ||  NUMBER OF OPERATIONS: [%d]\n", ps->n_iterarions);
 	
 	ft_printf("\nSTACK A\n");
 	while (i++ < ps->A.arr_sizeA - 1)
@@ -93,7 +94,7 @@ void print_test(t_stacks *ps)
 	ft_printf("\n\n");
 	i = -1;	
 	ft_printf("STACK B\n");
-	if (ps->B.arr_sizeB != 0)
+	if (ps->B.arr_sizeB != 0 && ps->B.arrB != NULL)
 	{
 		while (i++ < ps->B.arr_sizeB - 1)
 			ft_printf("[%d]", ps->B.arrB[i]);		
@@ -105,9 +106,35 @@ void print_test(t_stacks *ps)
 	ft_printf("\n\nGROUP STACK\n");
 	while (i++ < ps->A.arr_sizeA - 1)
 			ft_printf("[%d]", ps->group_arr[i]);
-	ft_printf("\n-------------------------\n");
 	ft_printf("\n");
-	
+
+
+	ft_printf("\n\nSTRING BIT ARRAY A\n");
+	if (ps->stringA != NULL)
+	{
+		i = -1;
 		
-	
+		while (i++ < ps->A.arr_sizeA - 1)
+				ft_printf("[%s]", ps->stringA[i]);
+		ft_printf("\n");		
+	}
+	else
+		ft_printf("[///EMPTY\\\\]");
+		
+	ft_printf("\n\nSTRING BIT ARRAY B\n");
+	//if (ps->stringB != NULL)
+	//{
+		i = 0;		
+		while (i < ps->B.arr_sizeB)
+		{
+				ft_printf("[%s]", ps->stringB[i]);
+				i++;
+		}
+		ft_printf("\n-------------------------\n");
+		ft_printf("\n");		
+	//}
+	//else
+	//	ft_printf("[///EMPTY\\\\]");	
+		
+	ft_printf("\n");
 }
