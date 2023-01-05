@@ -1,0 +1,4 @@
+*.o
+.valgrind-out.txt
+push_swap_tester/
+push_swap_tester_speed/

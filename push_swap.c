@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/05 01:38:05 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/05 03:23:29 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,16 @@ void binary_string(t_stacks *list, int *arr, int size)
     list->stringA = (char **)malloc(sizeof(char *) * size);
     while (i < size)
 	{
-        list->stringA[i] = (char *)malloc(sizeof(char) * n_bits + 1);
+        list->stringA[i] = (char *)malloc(sizeof(char) * list->bits + 1);
         num = arr[i];
-		j = n_bits - 1;
+		j = list->bits - 1;
 		while (j >= 0)
         {
             list->stringA[i][j] = (num % 2) + '0';
             num /= 2;
 			j--;
         }
-        list->stringA[i][n_bits] = '\0';
+        list->stringA[i][list->bits] = '\0';
 		i++;
     }
 }
@@ -104,12 +104,12 @@ void logic_operations(t_stacks *list)
 	i = 0;
 	j = 0;
 	max_len = list->arr_sizeA;	
-	while(i < n_bits)
+	while(i < list->bits)
 	{
 		j = 0;
 		while (j < max_len)
 		{
-			if ((list->stringA[0][n_bits - 1 - i]) == '1')
+			if ((list->stringA[0][list->bits - 1 - i]) == '1')
 				ra_void(list);
 			else
 				pb_string(list);
@@ -121,18 +121,6 @@ void logic_operations(t_stacks *list)
 	}	
 }
 
-int* binary_to_decimal(char** binary, int n) 
-{
-    int* decimal = malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        int len = ft_strlen(binary[i]);
-        decimal[i] = 0;
-        for (int j = 0; j < len; j++) {
-            decimal[i] = decimal[i] * 2 + (binary[i][j] - '0');
-        }
-    }
-    return decimal;
-}
 
 void free_mem(char **list, int rows)
 {
@@ -163,7 +151,22 @@ int main	(int argc, char **argv)
 	stack.stringA = NULL;
 	stack.stringB = NULL;
 	stack.n_iterarions = 0;
+	stack.bits = 7;
 
+	if (argc - 1 == 2)
+		stack.bits = 1;
+	else if (argc - 1 <= 5)
+		stack.bits = 3;
+	else if (argc - 1 <= 12)
+		stack.bits = 4;
+	else if (argc - 1 <= 100)
+		stack.bits = 7;
+	else if (argc - 1 <= 255)
+		stack.bits = 8;
+	else if (argc - 1 <= 500)
+		stack.bits = 9;
+
+		
 	while(i < stack.arr_sizeA)
 	{
 		if (!ft_isdigit_negative(argv[i + 1][0]))
