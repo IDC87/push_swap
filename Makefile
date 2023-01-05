@@ -1,13 +1,13 @@
 
 
 # Compiler to use
-CC=gcc
+CC=gcc -g
 
 # Flags to pass to the compiler
 CFLAGS=-c -Wall
 
 # Name of the executable to create
-EXE=a.out
+EXE=push_swap
 
 # List of object files to include in the executable
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))

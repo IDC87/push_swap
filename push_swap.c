@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/04 23:26:43 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/05 01:38:05 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 
 
-void group_numbers(int *new_arr, int arr_size) // novo nome sort_array
+void bubble_sort(int *new_arr, int arr_size) // novo nome sort_array
 {
 	int i;
 	int j;
@@ -99,10 +99,11 @@ void logic_operations(t_stacks *list)
 	int i;
 	int j;
 	int max_len;
+	//int usefull_bits;
 
 	i = 0;
 	j = 0;
-	max_len = list->A.arr_sizeA;	
+	max_len = list->arr_sizeA;	
 	while(i < n_bits)
 	{
 		j = 0;
@@ -115,7 +116,7 @@ void logic_operations(t_stacks *list)
 			j++;
 		}
 		i++;
-		while (list->B.arr_sizeB != 0)
+		while (list->arr_sizeB != 0)
 			pa_string(list);
 	}	
 }
@@ -133,6 +134,18 @@ int* binary_to_decimal(char** binary, int n)
     return decimal;
 }
 
+void free_mem(char **list, int rows)
+{
+	int i;
+	i = 0;
+	while (i < rows)  
+    {
+        free(list[i]);
+		i++;
+    }
+    free(list);   
+}
+
 
 int main	(int argc, char **argv)
 {
@@ -143,53 +156,43 @@ int main	(int argc, char **argv)
 	i = 0;
 	j = 0;
 	
-	stack.A.arr_sizeA = argc - 1;
-	stack.B.arr_sizeB = 0;
-	stack.args_size = argc - 1;
-	stack.A.arrA = (int *)malloc(sizeof(int) * stack.A.arr_sizeA);
-	stack.group_arr = (int *)malloc(sizeof(int) * stack.A.arr_sizeA);
+	stack.arr_sizeA = argc - 1;
+	stack.arr_sizeB = 0;
+	stack.arrA = (int *)malloc(sizeof(int) * stack.arr_sizeA);
+	stack.sorted_arr = (int *)malloc(sizeof(int) * stack.arr_sizeA);
 	stack.stringA = NULL;
 	stack.stringB = NULL;
 	stack.n_iterarions = 0;
-	stack.B.arrB =  NULL;
 
-	while(i < stack.A.arr_sizeA)
+	while(i < stack.arr_sizeA)
 	{
 		if (!ft_isdigit_negative(argv[i + 1][0]))
 			error();
 		j++;
-		stack.group_arr[i] = ft_atoi(argv[j]);
-		stack.A.arrA[i] = ft_atoi(argv[j]);	
+		stack.sorted_arr[i] = ft_atoi(argv[j]);
+		stack.arrA[i] = ft_atoi(argv[j]);	
 		i++;				
 	}
-	i = is_sorted(stack.A.arrA, stack.A.arr_sizeA, stack.B.arr_sizeB);
-	j = is_duplicated(stack.A.arrA, stack.A.arr_sizeA);
+	i = is_sorted(stack.arrA, stack.arr_sizeA, stack.arr_sizeB);
+	j = is_duplicated(stack.arrA, stack.arr_sizeA);
 	if (i == 1 || j == 1)
 		error();
 
-	group_numbers(stack.group_arr, stack.A.arr_sizeA);
-	index_group(stack.A.arrA, &stack.group_arr, stack.A.arr_sizeA);
-	binary_string(&stack, stack.group_arr, stack.A.arr_sizeA);	
+	bubble_sort(stack.sorted_arr, stack.arr_sizeA);
+	index_group(stack.arrA, &stack.sorted_arr, stack.arr_sizeA);
+	binary_string(&stack, stack.sorted_arr, stack.arr_sizeA);	
 
 	logic_operations(&stack);
 	
-	print_test(&stack);
-
-	int *decimal = binary_to_decimal(stack.stringA, stack.A.arr_sizeA);
-
-	i = 0;
-	while (i < stack.A.arr_sizeA)
-	{
-		ft_printf("[%d]", decimal[i]);
-		i++;
-		
-	}
-	ft_printf("\n\n");
+	//print_test(&stack);
 
 	
 
-	free(stack.A.arrA);
-	free(stack.B.arrB);	
-	free(stack.group_arr);
+	
+
+	free(stack.arrA);	
+	free(stack.sorted_arr);
+	free_mem(stack.stringA, stack.arr_sizeA);
+	free_mem(stack.stringB, stack.arr_sizeB);
 	return (0);
 }
