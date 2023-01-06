@@ -6,12 +6,13 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:15:16 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/05 03:11:16 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/05 07:28:08 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <string.h>
+
+
 
 void rotate_up_string(char** arr, int size)
 {
@@ -28,7 +29,7 @@ void rotate_up_string(char** arr, int size)
     arr[size - 1] = temp;
 }
 
-void ra_void(t_stacks *list)
+void ra_string(t_stacks *list)
 {	
 	if (list->arr_sizeA > 1)
 	{

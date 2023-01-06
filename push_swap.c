@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/05 03:23:29 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/06 01:25:03 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void logic_operations(t_stacks *list)
 		while (j < max_len)
 		{
 			if ((list->stringA[0][list->bits - 1 - i]) == '1')
-				ra_void(list);
+				ra_string(list);
 			else
 				pb_string(list);
 			j++;
@@ -134,6 +134,89 @@ void free_mem(char **list, int rows)
     free(list);   
 }
 
+/* void short_solve(t_stacks *list)
+{
+	if (list->arr_sizeA == 2)
+		ft_printf("sa\n");
+	else if (list->arr_sizeA == 3)	
+	{
+		if (list->sorted_arr[0] == 2)
+		{
+			ft_printf("ra\n");
+			if (list->sorted_arr[1] == 1)
+				ft_printf("sa\n");			
+		}
+		else if (list->sorted_arr[0] == 1)
+		{
+			if (list->sorted_arr[1] == 0)
+				ft_printf("sa\n");
+			else
+				ft_printf("rra\n");
+		}
+		else if (list->sorted_arr[0] == 0)
+		{
+			if (list->sorted_arr[1] == 2)
+				ft_printf("sa\nra\n");
+		}
+	}
+} */
+
+void short_solve(t_stacks *S)
+{
+	if (S->sorted_arr[0] > S->sorted_arr[1])
+	{
+		if (S->sorted_arr[1] > S->sorted_arr[2])
+		{
+			ra(S);
+			sa(S);
+		}
+		else if (S->sorted_arr[0] > S->sorted_arr[2])
+			ra(S);
+		else
+			sa(S);	
+	}
+	else if (S->sorted_arr[1] > S->sorted_arr[2])
+	{
+		if (S->sorted_arr[0] > S->sorted_arr[2])
+			rra(S);
+		else
+		{
+			sa(S);
+			ra(S);				
+		}		
+	}	
+}
+
+void go_radix(t_stacks *stack, int n_args)
+{
+	if (n_args > 4 && n_args <= 12)
+		stack->bits = 3;
+	else if (n_args > 12 && n_args <= 100)
+		stack->bits = 7;
+	else if (n_args > 100 && n_args <= 500)
+		stack->bits = 9;
+		
+	binary_string(stack, stack->sorted_arr, stack->arr_sizeA);
+	logic_operations(stack);
+	free_mem(stack->stringA, stack->arr_sizeA);
+	free_mem(stack->stringB, stack->arr_sizeB);
+}
+
+
+
+int	check_minimax(char *str)
+{
+	long long	nb;
+
+	nb = ft_atoi(str);
+	if (nb > 2147483647 || nb < -2147483648)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (0);
+	}
+	return (1);
+}
+
 
 int main	(int argc, char **argv)
 {
@@ -143,29 +226,21 @@ int main	(int argc, char **argv)
 	
 	i = 0;
 	j = 0;
+
+	if (argc == 1)
+		exit(0);
 	
 	stack.arr_sizeA = argc - 1;
 	stack.arr_sizeB = 0;
 	stack.arrA = (int *)malloc(sizeof(int) * stack.arr_sizeA);
+	stack.arrB = NULL;
 	stack.sorted_arr = (int *)malloc(sizeof(int) * stack.arr_sizeA);
 	stack.stringA = NULL;
 	stack.stringB = NULL;
 	stack.n_iterarions = 0;
-	stack.bits = 7;
+	stack.bits = 9;
 
-	if (argc - 1 == 2)
-		stack.bits = 1;
-	else if (argc - 1 <= 5)
-		stack.bits = 3;
-	else if (argc - 1 <= 12)
-		stack.bits = 4;
-	else if (argc - 1 <= 100)
-		stack.bits = 7;
-	else if (argc - 1 <= 255)
-		stack.bits = 8;
-	else if (argc - 1 <= 500)
-		stack.bits = 9;
-
+	
 		
 	while(i < stack.arr_sizeA)
 	{
@@ -176,16 +251,34 @@ int main	(int argc, char **argv)
 		stack.arrA[i] = ft_atoi(argv[j]);	
 		i++;				
 	}
-	i = is_sorted(stack.arrA, stack.arr_sizeA, stack.arr_sizeB);
-	j = is_duplicated(stack.arrA, stack.arr_sizeA);
-	if (i == 1 || j == 1)
+	if(is_sorted(stack.arrA, stack.arr_sizeA, stack.arr_sizeB))
+		exit(0);
+	if (is_duplicated(stack.arrA, stack.arr_sizeA))
 		error();
 
 	bubble_sort(stack.sorted_arr, stack.arr_sizeA);
 	index_group(stack.arrA, &stack.sorted_arr, stack.arr_sizeA);
-	binary_string(&stack, stack.sorted_arr, stack.arr_sizeA);	
-
-	logic_operations(&stack);
+	
+	if (argc - 1 >= 2 && argc - 1 <= 3)
+		short_solve(&stack);
+	else if (argc - 1 == 5)
+		medium_solve(&stack);
+	else if (argc - 1 > 5)
+		go_radix(&stack, argc - 1);
+	
+	
+	
+		
+		
+		/* stack.bits = 7;
+	else if (argc - 1 <= 255)
+		stack.bits = 8;
+	else if (argc - 1 <= 500)
+		stack.bits = 9;
+ */
+	//print_test(&stack);
+	
+	
 	
 	//print_test(&stack);
 
@@ -195,7 +288,6 @@ int main	(int argc, char **argv)
 
 	free(stack.arrA);	
 	free(stack.sorted_arr);
-	free_mem(stack.stringA, stack.arr_sizeA);
-	free_mem(stack.stringB, stack.arr_sizeB);
+	
 	return (0);
 }

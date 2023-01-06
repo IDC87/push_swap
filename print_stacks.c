@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:28:33 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/05 00:33:14 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:25:14 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void print_test(t_stacks *ps)
 	while (i++ < ps->arr_sizeA - 1)
 		ft_printf("[%d]", ps->arrA[i]);
 	ft_printf("\n\n");	
+
+	i = -1;
+	ft_printf("\nSTACK B\n");
+	while (i++ < ps->arr_sizeB - 1)
+		ft_printf("[%d]", ps->arrB[i]);
+	ft_printf("\n\n");
 	
 		
 	i = -1;
@@ -51,16 +57,19 @@ void print_test(t_stacks *ps)
 		ft_printf("[///EMPTY\\\\]");
 		
 	ft_printf("\n\nSTRING BIT ARRAY B\n");
-	//if (ps->stringB != NULL)
-	//{
+	if (ps->stringB != NULL)
+	{
 		i = 0;		
 		while (i < ps->arr_sizeB)
 		{
 				ft_printf("[%s]", ps->stringB[i]);
 				i++;
 		}
-		ft_printf("\n-------------------------\n");
-		ft_printf("\n");		
+	}
+	else
+		ft_printf("[///EMPTY\\\\]");
+	ft_printf("\n-------------------------\n");
+	ft_printf("\n");		
 		
 	ft_printf("\n");
 }
