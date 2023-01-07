@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/06 01:25:03 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/07 02:33:17 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,14 @@ void free_mem(char **list, int rows)
 } */
 
 void short_solve(t_stacks *S)
-{
+{	
 	if (S->sorted_arr[0] > S->sorted_arr[1])
 	{
+		if (S->arr_sizeA == 2)
+		{
+			sa(S);
+			return;
+		}
 		if (S->sorted_arr[1] > S->sorted_arr[2])
 		{
 			ra(S);
@@ -204,19 +209,25 @@ void go_radix(t_stacks *stack, int n_args)
 
 
 
-int	check_minimax(char *str)
-{
-	long long	nb;
-
-	nb = ft_atoi(str);
-	if (nb > 2147483647 || nb < -2147483648)
-	{
-		ft_putstr_fd("Error\n", 2);
-		return (0);
-	}
-	return (1);
+int	check_int_limits(long int num)
+{	
+	if (num >= -2147483648 && num <= 2147483647)
+		return (1);
+	return (0);
 }
 
+void check_all_errors(char *args)
+{
+	if (!ft_isdigit_negative(args[0]))
+		error();
+	if (!check_int_limits(ft_atoi(args)))
+		error();	
+}
+
+void initiate_variables(t_stacks *stack)
+{
+	
+}
 
 int main	(int argc, char **argv)
 {
@@ -224,11 +235,15 @@ int main	(int argc, char **argv)
 	int i;
 	int j;
 	
-	i = 0;
+	i = -1;
 	j = 0;
 
 	if (argc == 1)
 		exit(0);
+	
+	while (i++ < argc - 2)
+		check_all_errors(argv[1 + i]);
+	
 	
 	stack.arr_sizeA = argc - 1;
 	stack.arr_sizeB = 0;
@@ -241,50 +256,29 @@ int main	(int argc, char **argv)
 	stack.bits = 9;
 
 	
-		
+	i = 0;
 	while(i < stack.arr_sizeA)
-	{
-		if (!ft_isdigit_negative(argv[i + 1][0]))
-			error();
+	{		
 		j++;
 		stack.sorted_arr[i] = ft_atoi(argv[j]);
-		stack.arrA[i] = ft_atoi(argv[j]);	
+		stack.arrA[i] = ft_atoi(argv[j]);		
 		i++;				
 	}
-	if(is_sorted(stack.arrA, stack.arr_sizeA, stack.arr_sizeB))
+	if(is_sorted(stack.arrA, stack.arr_sizeA))
 		exit(0);
 	if (is_duplicated(stack.arrA, stack.arr_sizeA))
 		error();
+	
 
 	bubble_sort(stack.sorted_arr, stack.arr_sizeA);
 	index_group(stack.arrA, &stack.sorted_arr, stack.arr_sizeA);
 	
 	if (argc - 1 >= 2 && argc - 1 <= 3)
 		short_solve(&stack);
-	else if (argc - 1 == 5)
+	else if (argc - 1 == 4 || argc - 1 == 5)
 		medium_solve(&stack);
 	else if (argc - 1 > 5)
-		go_radix(&stack, argc - 1);
-	
-	
-	
-		
-		
-		/* stack.bits = 7;
-	else if (argc - 1 <= 255)
-		stack.bits = 8;
-	else if (argc - 1 <= 500)
-		stack.bits = 9;
- */
-	//print_test(&stack);
-	
-	
-	
-	//print_test(&stack);
-
-	
-
-	
+		go_radix(&stack, argc - 1);	
 
 	free(stack.arrA);	
 	free(stack.sorted_arr);

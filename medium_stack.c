@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 21:27:32 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/06 01:24:04 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/07 02:35:20 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,20 @@ void medium_solve(t_stacks *list)
 			rra(list);			
 		}
 		else
-			rra(list);
+			rra(list);	
 	pb(list);
+	if (is_sorted(list->sorted_arr, list->arr_sizeA))
+	{
+		pa(list);
+		return;		
+	}	
+	else if (list->arr_sizeA == 3)
+	{
+		short_solve(list);
+		pa(list);
+		return;
+	}	
 	min_counter = find_smallest(list->sorted_arr, list->arr_sizeA, 1);
-	//ft_printf("\nMIN %d\n", min_counter);
-	//ft_printf("SizeA %d\n\n", list->arr_sizeA);
-	//print_test(list);
 	i = 0;
 	if (min_counter <= list->arr_sizeA / 2)
 	{
@@ -75,7 +83,8 @@ void medium_solve(t_stacks *list)
 		else
 			rra(list);
 	pb(list);
-	short_solve(list);
+	if (!is_sorted(list->sorted_arr, list->arr_sizeA))
+		short_solve(list);
 	pa(list);
 	pa(list);
 
