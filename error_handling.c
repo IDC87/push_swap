@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:36:01 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/07 02:23:20 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/08 06:25:48 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ int	ft_isdigit_negative(int c)
 		return (0);
 }
 
+int	check_int_limits(long int num)
+{	
+	if (num >= -2147483648 && num <= 2147483647)
+		return (1);
+	return (0);
+}
+
 int is_sorted(const int *arr, int arr_size)
 {
 	int i;
@@ -38,7 +45,7 @@ int is_sorted(const int *arr, int arr_size)
 			j = 0;
 			while(j < arr_size - 1 - i)
 			{
-				if ((arr[j] > arr[j + 1])) // ARRANJAR ISTO, TA WIERD
+				if ((arr[j] > arr[j + 1])) 
 					return(0);								
 				j++;				
 			}
@@ -47,25 +54,45 @@ int is_sorted(const int *arr, int arr_size)
 		return (1);
 }
 
-int is_duplicated(const int *arr, int arr_size)
+int is_sorted_args(int arg_count, char **args)
 {
 	int i;
 	int j;
 	
 	i = 0;
-		while (i < arr_size)
-		{
-			j = i + 1;
-			while(j < arr_size)
+	j = 0;	
+			while(j < arg_count - 1)
 			{
-				if (arr[i] == arr[j])
-					return(1);								
+				if (ft_atoi(args[j]) > ft_atoi(args[j + 1])) 
+					return(0);								
 				j++;				
-			}
-			i++;			
-		}
-		return (0);
+			}			
+		
+		return (1);
 }
+
+
+int is_duplicated(int arg_count, char **args) 
+{
+	int i;
+  	int j;
+  
+  	i = 1;
+  	while (i < arg_count)
+  	{
+		j = i + 1;
+		while (j < arg_count)
+		{
+			if (ft_strncmp(args[i], args[j], (arg_count - 1)) == 0)
+				return (1);
+			j++;
+		}
+		i++;
+ 	}
+	return (0);
+}
+  
+
 
 
 

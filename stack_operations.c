@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 07:28:11 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/06 00:56:20 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/08 04:23:35 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void ra(t_stacks *list)
 {	
 	if (list->arr_sizeA > 1)
 	{
-		//rotate_up(&(A->arrA), &(A->arr_sizeA));
 		rotate_up(&(list->sorted_arr), &(list->arr_sizeA));
 		ft_printf("ra\n");		
 	}
@@ -80,26 +79,20 @@ int pop_item(int **arr, int *arr_size)
 {
 	int *new_arr;
 	int pop_first;
-	int i;
-
-	if (*(arr_size) != 0)
+	int i;	
+	
+	new_arr = (int *)malloc(sizeof(int) * (*arr_size - 1));
+	pop_first = (*arr)[0];
+	i = 0;
+	while (i < (*arr_size - 1))
 	{
-		new_arr = (int *)malloc(sizeof(int) * (*arr_size - 1));
-		pop_first = (*arr)[0];
-			i = 0;
-			while (i < (*arr_size - 1))
-			{
-				new_arr[i] = (*arr)[i + 1];
-				i++;
-			}
-			free(*arr);
-			*arr = new_arr;
-			(*arr_size)--;
-			
-		return (pop_first);		
+		new_arr[i] = (*arr)[i + 1];
+		i++;
 	}
-	else
-		exit(0);
+	free(*arr);		
+	*arr = new_arr;
+	(*arr_size)--;			
+	return (pop_first);		
 }
 
 void push_item(int **arr, int *arr_size, int value)
@@ -117,31 +110,30 @@ void push_item(int **arr, int *arr_size, int value)
 	}
 	free(*arr);
 	(*arr) = new_arr;
-	(*arr_size)++;
-	
+	(*arr_size)++;	
 }
 
 void pa(t_stacks *stack)
 {
 	int popped;
 
-	if (stack->arr_sizeB != 0)
-	{
+	/* if (stack->arr_sizeB != 0)
+	{ */
 		popped = pop_item(&(stack->arrB), &(stack->arr_sizeB));
 		push_item(&(stack->sorted_arr), &(stack->arr_sizeA), popped);
-		ft_printf("pa\n");	
-	}
+		ft_printf("pa\n");
+	//}
 }
 
 void pb(t_stacks *stack)
 {
 	int popped;
 	
-	 if (stack->arr_sizeA != 0)
-	{
+	 /* if (stack->arr_sizeA != 0)
+	{ */
 		popped = pop_item(&(stack->sorted_arr), &(stack->arr_sizeA));
 		push_item(&(stack->arrB), &(stack->arr_sizeB), popped);
 		ft_printf("pb\n");	
-	}
+	//}
 
 }
