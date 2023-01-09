@@ -6,11 +6,42 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 21:27:32 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/08 04:20:33 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:46:08 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void short_solve(t_stacks *S)
+{	
+	if (S->sorted_arr[0] > S->sorted_arr[1])
+	{
+		if (S->arr_sizeA == 2)
+		{
+			sa(S);
+			return;
+		}
+		if (S->sorted_arr[1] > S->sorted_arr[2])
+		{
+			ra(S);
+			sa(S);
+		}
+		else if (S->sorted_arr[0] > S->sorted_arr[2])
+			ra(S);
+		else
+			sa(S);	
+	}
+	else if (S->sorted_arr[1] > S->sorted_arr[2])
+	{
+		if (S->sorted_arr[0] > S->sorted_arr[2])
+			rra(S);
+		else
+		{
+			sa(S);
+			ra(S);				
+		}		
+	}	
+}
 
 int find_smallest(const int *array, int size, int value)
 {
@@ -49,23 +80,28 @@ void rotate_and_push(t_stacks *list, int index)
 		pb(list);	
 }
 
-void medium_solve(t_stacks *list)
-{	
-	rotate_and_push(list, 0);
-	if (is_sorted(list->sorted_arr, list->arr_sizeA))
-	{
-		pa(list);
-		return;		
-	}	
-	else if (list->arr_sizeA == 3)
-	{
+void medium_solve(t_stacks *list, int arg_count)
+{
+	if (arg_count - 1 <= 3)
 		short_solve(list);
+	else
+	{
+		rotate_and_push(list, 0);
+		if (is_sorted(list->sorted_arr, list->arr_sizeA))
+		{
+			pa(list);
+			return;		
+		}	
+		else if (list->arr_sizeA == 3)
+		{
+			short_solve(list);
+			pa(list);
+			return;
+		}
+		rotate_and_push(list, 1);
+		if (!is_sorted(list->sorted_arr, list->arr_sizeA))
+			short_solve(list);
 		pa(list);
-		return;
+		pa(list);
 	}
-	rotate_and_push(list, 1);
-	if (!is_sorted(list->sorted_arr, list->arr_sizeA))
-		short_solve(list);
-	pa(list);
-	pa(list);
 }

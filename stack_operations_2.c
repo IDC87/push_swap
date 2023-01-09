@@ -1,61 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_operations.c                                :+:      :+:    :+:   */
+/*   stack_operations_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 10:15:16 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/05 07:28:08 by ivda-cru         ###   ########.fr       */
+/*   Created: 2023/01/09 08:42:37 by ivda-cru          #+#    #+#             */
+/*   Updated: 2023/01/09 15:34:12 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-
-
-void rotate_up_string(char** arr, int size)
-{
-	int i;
-    char* temp;
-	
-	i = 0;
-	temp = arr[0];
-	while (i < size - 1)
-    {
-        arr[i] = arr[i + 1];
-		i++;
-    }
-    arr[size - 1] = temp;
-}
 
 void ra_string(t_stacks *list)
 {	
 	if (list->arr_sizeA > 1)
 	{
 		rotate_up_string((list->stringA), (list->arr_sizeA));
-		ft_printf("ra\n");
+		ft_putendl_fd("ra", 1);
+		//ft_printf("ra\n");
 		list->n_iterarions++;	
 	}
 }
 
-char *pop_element(t_stacks *bits, char** arr_pop, int* size)
+void pb_string(t_stacks *str)
 {
-	int i;
-	char *tmp;
+	char *popped;	
+	popped = pop_element(str, str->stringA, &str->arr_sizeA);
+	str->stringB = pushArrayFront(str, str->stringB, &str->arr_sizeB, popped);
+	ft_putendl_fd("pb", 1);
+	//ft_printf("pb\n");
+	str->n_iterarions++;
+	free(popped);
+}
 
-	i = 0;
-	tmp = (char *)malloc(sizeof(char) *(bits->bits + 1));
-	ft_memcpy(tmp, arr_pop[0], bits->bits + 1);
-    free(arr_pop[0]);
-
-	while (i < *size - 1)
-    {
-        arr_pop[i] = arr_pop[i + 1];
-		i++;
-    }
-    (*size)--;
-	return tmp;
+void pa_string(t_stacks *str)
+{
+	char *popped;	
+	popped = pop_element(str, str->stringB, &str->arr_sizeB);
+	str->stringA = pushArrayFront(str, str->stringA, &str->arr_sizeA, popped);
+	ft_putendl_fd("pa", 1);
+	//ft_printf("pa\n");
+	str->n_iterarions++;
+	free(popped);	
 }
 
 char **pushArrayFront(t_stacks *bits, char **arr_push, int *size, char* element)
@@ -82,22 +69,23 @@ char **pushArrayFront(t_stacks *bits, char **arr_push, int *size, char* element)
 	return arr_push;
 }
 
-void pb_string(t_stacks *str)
+char *pop_element(t_stacks *bits, char** arr_pop, int* size)
 {
-	char *popped;	
-	popped = pop_element(str, str->stringA, &str->arr_sizeA);
-	str->stringB = pushArrayFront(str, str->stringB, &str->arr_sizeB, popped);
-	ft_printf("pb\n");
-	str->n_iterarions++;
-	free(popped);
-}
+	int i;
+	char *tmp;
 
-void pa_string(t_stacks *str)
-{
-	char *popped;	
-	popped = pop_element(str, str->stringB, &str->arr_sizeB);
-	str->stringA = pushArrayFront(str, str->stringA, &str->arr_sizeA, popped);
-	ft_printf("pa\n");
-	str->n_iterarions++;
-	free(popped);	
+	i = 0;
+	tmp = (char *)malloc(sizeof(char) *(bits->bits + 1));
+		if (!tmp)
+			return (NULL);
+	ft_memcpy(tmp, arr_pop[0], bits->bits + 1);
+    free(arr_pop[0]);
+
+	while (i < *size - 1)
+    {
+        arr_pop[i] = arr_pop[i + 1];
+		i++;
+    }
+    (*size)--;
+	return tmp;
 }

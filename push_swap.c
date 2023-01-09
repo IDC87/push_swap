@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/08 06:26:57 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:33:30 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,56 +24,30 @@ void free_mem(char **list, int rows)
     free(list);   
 }
 
-void short_solve(t_stacks *S)
-{	
-	if (S->sorted_arr[0] > S->sorted_arr[1])
-	{
-		if (S->arr_sizeA == 2)
-		{
-			sa(S);
-			return;
-		}
-		if (S->sorted_arr[1] > S->sorted_arr[2])
-		{
-			ra(S);
-			sa(S);
-		}
-		else if (S->sorted_arr[0] > S->sorted_arr[2])
-			ra(S);
-		else
-			sa(S);	
-	}
-	else if (S->sorted_arr[1] > S->sorted_arr[2])
-	{
-		if (S->sorted_arr[0] > S->sorted_arr[2])
-			rra(S);
-		else
-		{
-			sa(S);
-			ra(S);				
-		}		
-	}	
-}
-
 void check_arguments(char **args, int arg_count)
 {
 	int i;
 
-	i = 0;
+	i = 0;	
+	
 	if (arg_count == 1)
-		exit(0);
+		exit(EXIT_SUCCESS);
 	while (i < arg_count - 1)
 	{
-		if (!ft_isdigit_negative(args[1 + i][0]))
-			error();
-		if (!check_int_limits(ft_atoi(args[1 + i])))
-			error();		
+		if (!ft_isdigit_negative(args[i][0])) // atencao! voltar a por 1 + i que vem do nome do file
+			error(args, arg_count - 1);
+		if (!check_int_limits(ft_atoi(args[i]))) // atencao ao 1 + i que vem do nome do file
+			error(args, arg_count - 1);		
 		i++;		
 	}
 	if (is_duplicated(arg_count, args))
-		error();
-	if(is_sorted_args(arg_count, args) == 1)
-		exit(0);
+		error(args, arg_count - 1); 	
+	 if(is_sorted_args(arg_count, args) == 1)
+	 {
+		free_mem(args, arg_count - 1);
+		exit(EXIT_SUCCESS);
+	 }
+	
 }
 
 void initiate_variables(t_stacks *stack, char **args, int arg_count)
@@ -86,7 +60,7 @@ void initiate_variables(t_stacks *stack, char **args, int arg_count)
 	stack->arrA = (int *)malloc(sizeof(int) * stack->arr_sizeA);
 	stack->sorted_arr = (int *)malloc(sizeof(int) * stack->arr_sizeA);
 	if (stack->sorted_arr == NULL || stack->arrA == NULL)
-		return;	
+		return ;	
 	stack->arrB = NULL;	
 	stack->stringA = NULL;
 	stack->stringB = NULL;
@@ -94,28 +68,56 @@ void initiate_variables(t_stacks *stack, char **args, int arg_count)
 	stack->bits = 9;	
 	while(i < stack->arr_sizeA)
 	{		
-		stack->sorted_arr[i] = ft_atoi(args[i + 1]);
-		stack->arrA[i] = ft_atoi(args[i + 1]);		
+		stack->sorted_arr[i] = ft_atoi(args[i]); // atencao! voltar a por 1 + i que vem do nome do file
+		stack->arrA[i] = ft_atoi(args[i]);		// atencao! voltar a por 1 + i que vem do nome do file
 		i++;				
 	}
+}
+
+char **check_arg_string(char **args, int *arg_count)
+{
+	char **str;
+	int i;
+	
+	i = 0;	
+	if (*arg_count == 2)
+	{
+		str = ft_split(args[1], ' ');
+		while (str[i] != NULL)
+			i++;	
+		*arg_count = i + 1; // + 1 to be adjust so that other functions are counting with - 1 argc
+	}
+	else
+	{
+		str = (char **)malloc(sizeof(char *) * (*arg_count - 1));
+			if (!str)
+				return (NULL);
+		while (i < *arg_count - 1)
+		{
+			str[i] = ft_strdup(args[i + 1]);
+			i++;
+		}
+	}	
+	return (str);
 }
 
 int main	(int argc, char **argv)
 {
 	t_stacks stack;
-		
-	check_arguments(argv, argc);	
-	initiate_variables(&stack, argv, argc);	
+	char **str;
+	
+	str = check_arg_string(argv, &argc);			
+	check_arguments(str, argc);	
+	initiate_variables(&stack, str, argc);	
 	bubble_sort(stack.sorted_arr, stack.arr_sizeA);
 	index_group(stack.arrA, &stack.sorted_arr, stack.arr_sizeA);	
-	if (argc - 1 >= 2 && argc - 1 <= 3)
-		short_solve(&stack);
-	else if (argc - 1 == 4 || argc - 1 == 5)
-		medium_solve(&stack);
-	else if (argc - 1 > 5)
+	if (argc - 1 <= 5)
+		medium_solve(&stack, argc - 1);
+	else
 		go_radix(&stack, argc - 1);	
 	free(stack.arrA);
 	free(stack.arrB);
 	free(stack.sorted_arr);	
-	return (0);
+	free_mem(str, argc - 1);
+	return (EXIT_SUCCESS);
 }

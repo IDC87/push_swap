@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_operations.c                                 :+:      :+:    :+:   */
+/*   stack_operations_3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 07:28:11 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/08 04:23:35 by ivda-cru         ###   ########.fr       */
+/*   Created: 2023/01/09 08:44:27 by ivda-cru          #+#    #+#             */
+/*   Updated: 2023/01/09 15:38:29 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_stacks *swap)
+void rotate_up_string(char** arr, int size)
 {
-	int tmp;
-
-	tmp = 0;	
-	tmp = swap->sorted_arr[0];
-	swap->sorted_arr[0] = swap->sorted_arr[1];
-	swap->sorted_arr[1] = tmp;
-	ft_printf("sa\n");
+	int i;
+    char* temp;
+	
+	i = 0;
+	temp = arr[0];
+	while (i < size - 1)
+    {
+        arr[i] = arr[i + 1];
+		i++;
+    }
+    arr[size - 1] = temp;
 }
 
 void rotate_up(int **arr, int *arr_size)
@@ -30,6 +34,8 @@ void rotate_up(int **arr, int *arr_size)
 
 	i = 0;	
 	new_arr = (int *)malloc(sizeof(int) * (*arr_size));
+	if (!new_arr)
+		exit(EXIT_FAILURE);
 	while (i < (*arr_size - 1))
 	{
 		new_arr[i] = (*arr)[i + 1];		
@@ -47,6 +53,8 @@ void rotate_down(int **arr, int *arr_size)
 
 	i = 0;
 	new_arr = (int *)malloc(sizeof(int) * (*arr_size));
+	if (!new_arr)
+		exit(EXIT_FAILURE);
 	new_arr[0] = (*arr)[(*arr_size - 1)];
 	while (i < (*arr_size - 1))
 	{
@@ -57,24 +65,6 @@ void rotate_down(int **arr, int *arr_size)
 	(*arr) = new_arr;
 }
 
-void ra(t_stacks *list)
-{	
-	if (list->arr_sizeA > 1)
-	{
-		rotate_up(&(list->sorted_arr), &(list->arr_sizeA));
-		ft_printf("ra\n");		
-	}
-}
-
-void rra(t_stacks *list)
-{
-	if (list->arr_sizeA > 1)
-	{
-		rotate_down(&(list->sorted_arr), &(list->arr_sizeA));
-		ft_printf("rra\n");		
-	}
-}
-
 int pop_item(int **arr, int *arr_size)
 {
 	int *new_arr;
@@ -82,6 +72,8 @@ int pop_item(int **arr, int *arr_size)
 	int i;	
 	
 	new_arr = (int *)malloc(sizeof(int) * (*arr_size - 1));
+	if (!new_arr)
+		exit(EXIT_FAILURE);
 	pop_first = (*arr)[0];
 	i = 0;
 	while (i < (*arr_size - 1))
@@ -102,6 +94,8 @@ void push_item(int **arr, int *arr_size, int value)
 
 	i = 0;
 	new_arr = (int *)malloc(sizeof(int) * ((*arr_size) + 1));
+	if (!new_arr)
+		exit(EXIT_FAILURE);
 	new_arr[0] = value;
 	while (i < (*arr_size))
 	{
@@ -111,29 +105,4 @@ void push_item(int **arr, int *arr_size, int value)
 	free(*arr);
 	(*arr) = new_arr;
 	(*arr_size)++;	
-}
-
-void pa(t_stacks *stack)
-{
-	int popped;
-
-	/* if (stack->arr_sizeB != 0)
-	{ */
-		popped = pop_item(&(stack->arrB), &(stack->arr_sizeB));
-		push_item(&(stack->sorted_arr), &(stack->arr_sizeA), popped);
-		ft_printf("pa\n");
-	//}
-}
-
-void pb(t_stacks *stack)
-{
-	int popped;
-	
-	 /* if (stack->arr_sizeA != 0)
-	{ */
-		popped = pop_item(&(stack->sorted_arr), &(stack->arr_sizeA));
-		push_item(&(stack->arrB), &(stack->arr_sizeB), popped);
-		ft_printf("pb\n");	
-	//}
-
 }

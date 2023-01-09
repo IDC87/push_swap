@@ -1,10 +1,12 @@
 
 
 # Compiler to use
-CC=gcc -g
+CC=gcc 
 
 # Flags to pass to the compiler
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -Wextra -Werror
+
+ 
 
 # Name of the executable to create
 EXE=push_swap
