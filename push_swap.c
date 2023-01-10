@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:55:47 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:22:38 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:59:42 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ void	initiate_variables(t_stacks *stack, char **args, int arg_count)
 	stack->arr_sizeA = arg_count - 1;
 	stack->arr_sizeB = 0;
 	stack->arrA = (int *)malloc(sizeof(int) * stack->arr_sizeA);
+	if (!stack->arrA)
+		exit(EXIT_FAILURE);
 	stack->sorted_arr = (int *)malloc(sizeof(int) * stack->arr_sizeA);
-	if (stack->sorted_arr == NULL || stack->arrA == NULL)
-		return ;
+	if (!stack->sorted_arr)
+		exit(EXIT_FAILURE);
 	stack->arrB = NULL;
 	stack->stringA = NULL;
 	stack->stringB = NULL;
@@ -76,14 +78,14 @@ void	initiate_variables(t_stacks *stack, char **args, int arg_count)
 char	**check_arg_string(char **args, int *arg_count)
 {
 	char	**str;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (*arg_count == 2)
 	{
 		str = ft_split(args[1], ' ');
 		while (str[i] != NULL)
-			i++;	
+			i++;
 		*arg_count = i + 1;
 	}
 	else

@@ -6,14 +6,14 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:56:37 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:28:12 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:30:42 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-#include "./libft/libft.h"
+# include "./libft/libft.h"
 
 typedef struct s_stacks
 {
@@ -44,10 +44,10 @@ void	ra_string(t_stacks *list);
 void	rotate_up(int **arr, int *arr_size);
 void	rotate_down(int **arr, int *arr_size);
 void	rotate_up_string(char **arr, int arr_size);
-char	*pop_element(t_stacks *bits, char** arr, int* size);
+char	*pop_element(t_stacks *bits, char **arr, int *size);
 void	push_item(int **arr, int *arr_size, int value);
 void	pb_string(t_stacks *str);
-char	**pushArrayFront(t_stacks *bits, char** arr, int* size, char* element);
+char	**pushArrayFront(t_stacks *bits, char **arr, int *size, char *element);
 void	pa_string(t_stacks *str);
 void	free_mem(char **list, int rows);
 void	sa(t_stacks *swap);

@@ -6,11 +6,22 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 21:27:32 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:16:11 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:26:12 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	short_solve_two(t_stacks *S)
+{
+	if (S->sorted_arr[0] > S->sorted_arr[2])
+		rra(S);
+	else
+	{
+		sa(S);
+		ra(S);
+	}
+}
 
 void	short_solve(t_stacks *S)
 {	
@@ -20,7 +31,7 @@ void	short_solve(t_stacks *S)
 		{
 			sa(S);
 			return ;
-		}
+		}			
 		if (S->sorted_arr[1] > S->sorted_arr[2])
 		{
 			ra(S);
@@ -33,13 +44,7 @@ void	short_solve(t_stacks *S)
 	}
 	else if (S->sorted_arr[1] > S->sorted_arr[2])
 	{
-		if (S->sorted_arr[0] > S->sorted_arr[2])
-			rra(S);
-		else
-		{
-			sa(S);
-			ra(S);				
-		}		
+		short_solve_two(S);
 	}	
 }
 
@@ -70,13 +75,15 @@ void	rotate_and_push(t_stacks *list, int index)
 			ra(list);
 	}
 	else
+	{
 		if (min_counter == (3 - index))
 		{
 			rra(list);
 			rra(list);
 		}
-	else
-		rra(list);
+		else
+			rra(list);
+	}
 	pb(list);
 }
 

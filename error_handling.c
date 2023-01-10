@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:36:01 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:03:31 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:37:49 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_sorted_args(int arg_count, char **args)
 {
 	int	j;	
 
-	j = 0;	
+	j = 0;
 	while (j < arg_count - 2)
 	{
 		if (ft_atoi(args[j]) > ft_atoi(args[j + 1]))
@@ -69,7 +69,7 @@ int	is_sorted_args(int arg_count, char **args)
 	return (1);
 }
 
-int	is_duplicated(int arg_count, char **args) 
+int	is_duplicated(int arg_count, char **args)
 {
 	int	i;
 	int	j;
