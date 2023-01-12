@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 08:44:27 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:37:51 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/12 08:22:33 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	rotate_up(int **arr, int *arr_size)
 		exit(EXIT_FAILURE);
 	while (i < (*arr_size - 1))
 	{
-		new_arr[i] = (*arr)[i + 1];		
+		new_arr[i] = (*arr)[i + 1];
 		i++;
 	}
 	new_arr[i] = *(arr)[0];

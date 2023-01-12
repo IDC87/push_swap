@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 00:54:25 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/09 16:11:40 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/12 08:21:22 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,19 @@ void	binary_string(t_stacks *list, int *arr, int size)
 	int	num;
 
 	i = 0;
-	list->stringA = (char **)malloc(sizeof(char *) * size);
+	list->string_a = (char **)malloc(sizeof(char *) * size);
 	while (i < size)
 	{
-		list->stringA[i] = (char *)malloc(sizeof(char) * list->bits + 1);
+		list->string_a[i] = (char *)malloc(sizeof(char) * list->bits + 1);
 		num = arr[i];
 		j = list->bits - 1;
 		while (j >= 0)
 		{
-			list->stringA[i][j] = (num % 2) + '0';
+			list->string_a[i][j] = (num % 2) + '0';
 			num /= 2;
 		j--;
 		}
-		list->stringA[i][list->bits] = '\0';
+		list->string_a[i][list->bits] = '\0';
 	i++;
 	}
 }
@@ -97,20 +97,20 @@ void	logic_operations(t_stacks *list)
 
 	i = 0;
 	j = 0;
-	max_len = list->arr_sizeA;
+	max_len = list->arr_size_a;
 	while (i < list->bits)
 	{
 		j = 0;
 		while (j < max_len)
 		{
-			if ((list->stringA[0][list->bits - 1 - i]) == '1')
+			if ((list->string_a[0][list->bits - 1 - i]) == '1')
 				ra_string(list);
 			else
 				pb_string(list);
 			j++;
 		}
 		i++;
-		while (list->arr_sizeB != 0)
+		while (list->arr_size_b != 0)
 			pa_string(list);
 	}	
 }
@@ -125,8 +125,8 @@ void	go_radix(t_stacks *stack, int n_args)
 		stack->bits = 7;
 	else if (n_args > 100 && n_args <= 500)
 		stack->bits = 9;
-	binary_string(stack, stack->sorted_arr, stack->arr_sizeA);
+	binary_string(stack, stack->sorted_arr, stack->arr_size_a);
 	logic_operations(stack);
-	free_mem(stack->stringA, stack->arr_sizeA);
-	free_mem(stack->stringB, stack->arr_sizeB);
+	free_mem(stack->string_a, stack->arr_size_a);
+	free_mem(stack->string_b, stack->arr_size_b);
 }

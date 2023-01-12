@@ -6,18 +6,11 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 16:36:01 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/10 10:37:49 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:26:15 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	error(char **str, int arg_count)
-{
-	free_mem(str, arg_count);
-	ft_putendl_fd("Error", 2);
-	exit(EXIT_FAILURE);
-}
 
 int	ft_isdigit_negative(int c)
 {

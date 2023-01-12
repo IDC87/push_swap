@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 21:27:32 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/10 10:26:12 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:33:19 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	short_solve(t_stacks *S)
 {	
 	if (S->sorted_arr[0] > S->sorted_arr[1])
 	{
-		if (S->arr_sizeA == 2)
+		if (S->arr_size_a == 2)
 		{
 			sa(S);
 			return ;
@@ -68,8 +68,8 @@ void	rotate_and_push(t_stacks *list, int index)
 	int	i;
 
 	i = 0;
-	min_counter = find_smallest(list->sorted_arr, list->arr_sizeA, index);
-	if (min_counter <= list->arr_sizeA / 2)
+	min_counter = find_smallest(list->sorted_arr, list->arr_size_a, index);
+	if (min_counter <= list->arr_size_a / 2)
 	{
 		while (min_counter - i++ > 0)
 			ra(list);
@@ -94,19 +94,19 @@ void	medium_solve(t_stacks *list, int arg_count)
 	else
 	{
 		rotate_and_push(list, 0);
-		if (is_sorted(list->sorted_arr, list->arr_sizeA))
+		if (is_sorted(list->sorted_arr, list->arr_size_a))
 		{
 			pa(list);
 			return ;
 		}	
-		else if (list->arr_sizeA == 3)
+		else if (list->arr_size_a == 3)
 		{
 			short_solve(list);
 			pa(list);
 			return ;
 		}
 		rotate_and_push(list, 1);
-		if (!is_sorted(list->sorted_arr, list->arr_sizeA))
+		if (!is_sorted(list->sorted_arr, list->arr_size_a))
 			short_solve(list);
 		pa(list);
 		pa(list);

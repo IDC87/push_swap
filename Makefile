@@ -1,38 +1,43 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/01/12 08:31:19 by ivda-cru          #+#    #+#              #
+#    Updated: 2023/01/12 08:57:14 by ivda-cru         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
+CC=gcc
+CFLAGS = -c -Wall -Wextra -Werror 
 
-# Compiler to use
-CC=gcc 
+NAME = push_swap
 
-# Flags to pass to the compiler
-CFLAGS=-c -Wall -Wextra -Werror
-
- 
-
-# Name of the executable to create
-EXE=push_swap
-
-# List of object files to include in the executable
 OBJS=$(patsubst %.c,%.o,$(wildcard *.c))
 
-# Directory containing the library files
 LIBDIR=./libft
 
-# List of libraries to link with
 LIBS=./libft/libft.a
 
-#$(addprefix $(LIBDIR)/,$(wildcard *.a))
+all: $(NAME)
 
-# Default target
-all: $(EXE)
-
-# Target to create the executable
-$(EXE): $(OBJS)
+$(NAME): $(OBJS)
+	${MAKE} -C libft
 	$(CC) $(OBJS) $(LIBS) -o $@
 
-# Target to compile a .c file into a .o file
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-# Target to clean up temporary files
 clean:
-	rm -f $(OBJS) $(EXE)
+	${MAKE} clean -C libft
+	rm -rf $(OBJS) 
+
+fclean: clean
+		${MAKE} fclean -C libft
+		rm -rf $(NAME)
+re: fclean all
+
+.PHONY: all clean fclean re
+	

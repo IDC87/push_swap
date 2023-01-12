@@ -6,7 +6,7 @@
 /*   By: ivda-cru <ivda-cru@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 19:56:37 by ivda-cru          #+#    #+#             */
-/*   Updated: 2023/01/10 10:30:42 by ivda-cru         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:44:06 by ivda-cru         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 typedef struct s_stacks
 {
-	int		*arrA;
-	int		arr_sizeA;
-	int		*arrB;
-	int		arr_sizeB;
-	char	**stringA;
-	char	**stringB;
+	int		*arr_a;
+	int		arr_size_a;
+	int		*arr_b;
+	int		arr_size_b;
+	char	**string_a;
+	char	**string_b;
 	int		*sorted_arr;
 	int		n_iterarions;
 	int		bits;	
@@ -47,7 +47,7 @@ void	rotate_up_string(char **arr, int arr_size);
 char	*pop_element(t_stacks *bits, char **arr, int *size);
 void	push_item(int **arr, int *arr_size, int value);
 void	pb_string(t_stacks *str);
-char	**pushArrayFront(t_stacks *bits, char **arr, int *size, char *element);
+char	**push_element(t_stacks *bits, char **arr, int *size, char *element);
 void	pa_string(t_stacks *str);
 void	free_mem(char **list, int rows);
 void	sa(t_stacks *swap);
